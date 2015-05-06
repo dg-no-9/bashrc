@@ -4,8 +4,9 @@ alias ll='ls -alh'
 alias la='ls -A'
 alias lk='ls -lhSr'
 alias l='ls -CFlh'
-alias lsd="ls -alF | grep /$"
+alias lsd="ls -alhSrF | grep /$"
 alias ld='ls -ltr'
+alias latest="ls -lrt | tail -1 | awk '{print $NF}'"
 alias cd..='cd ..'
 alias ..='cd ..'
 alias h="history|grep "
@@ -34,11 +35,11 @@ export PATH=$M2:$PATH
 
 patro(){
 #can='\[\e[0;31m\]'
-echo -e ""
-echo -ne "Today is "; date
-echo -e ""; cal 1;
+#echo -e ""
+#echo -ne "Today is "; date
+echo -e ""; cal | grep -C6 --color -e " $(date +%e)" -e "^(date +%e)";
 #echo -ne "Up time:";uptime | awk /'up/'
-echo "";
+#echo "";
 }
 patro
 sl(){
@@ -75,6 +76,17 @@ up(){
   fi
   cd $d
 }
+
+function .. (){
+    local arg=${1:-1};
+    local dir=""
+    while [ $arg -gt 0 ]; do
+        dir="../$dir"
+        arg=$(($arg - 1));
+    done
+    cd $dir #>&/dev/null
+}
+
 #copy and go to directory
 cpg (){
   if [ -d "$2" ];then
