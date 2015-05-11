@@ -18,6 +18,9 @@ alias diff='colordiff'
 alias binstall="sudo brew install"
 alias pinstall="sudo pip install"
 alias pversion="pip freeze | grep"
+alias mute="osascript -e 'set volume output muted true'"
+alias unmute="osascript -e 'set volume output muted false'"
+alias envdo="sudo /opt/immune/bin/envdo"
 export COCOS2DX_ROOT=/Users/dg/Documents/acstudios/backup/cocos2d-x-2.2.1
 export NDK_ROOT=/Users/dg/Documents/acstudios/backup/android-ndk-r10d
 export ANDROID_HOME=/Users/dg/Documents/acstudios/backup/adt-bundle-mac-x86_64-20140702/sdk
@@ -55,9 +58,9 @@ maketar() { tar cvzf "${1%%/}.tar.gz"  "${1%%/}/"; }
 makezip() { zip -r "${1%%/}.zip" "$1" ; }
 
 #Get Ip Address
-function my_ip() # Get IP adress on ethernet.
+function ip() # Get IP adress on ethernet.
 {
-    MY_IP=$(/sbin/ifconfig eth0 | awk '/inet/ { print $2 } ' |
+    MY_IP=$(/sbin/ifconfig en1 | awk '/inet/ { print $2 } ' |
       sed -e s/addr://)
     echo ${MY_IP:-"Not connected"}
 }
