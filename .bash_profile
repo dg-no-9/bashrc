@@ -21,6 +21,7 @@ alias pversion="pip freeze | grep"
 alias mute="osascript -e 'set volume output muted true'"
 alias unmute="osascript -e 'set volume output muted false'"
 alias envdo="sudo /opt/immune/bin/envdo"
+alias kill="sudo kill -9"
 export COCOS2DX_ROOT=/Users/dg/Documents/acstudios/backup/cocos2d-x-2.2.1
 export NDK_ROOT=/Users/dg/Documents/acstudios/backup/android-ndk-r10d
 export ANDROID_HOME=/Users/dg/Documents/acstudios/backup/adt-bundle-mac-x86_64-20140702/sdk
