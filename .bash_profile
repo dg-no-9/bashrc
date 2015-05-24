@@ -37,7 +37,7 @@ export M2=$M2_HOME/bin
 export PATH=$M2:$PATH
 #alias refresh_profile=source ~/.bash_profile
 
-patro(){
+calender(){
 #can='\[\e[0;31m\]'
 #echo -e ""
 #echo -ne "Today is "; date
@@ -45,7 +45,7 @@ echo -e ""; cal | grep -C6 --color -e " $(date +%e)" -e "^(date +%e)";
 #echo -ne "Up time:";uptime | awk /'up/'
 #echo "";
 }
-patro
+calender
 sl(){
 ssh support@192.168.2.$1
 }
@@ -80,7 +80,7 @@ up(){
   fi
   cd $d
 }
-
+#move director back by given number
 function .. (){
     local arg=${1:-1};
     local dir=""
