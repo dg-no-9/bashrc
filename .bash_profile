@@ -1,5 +1,5 @@
 export CLICOLOR=1
-export LOGINSPECT_HOME=/Users/dg/Documents/logpoint/ptf/disk
+PS1="u@h:\\w "
 alias ll='ls -alh'
 alias la='ls -A'
 alias lk='ls -lhSr'
@@ -15,36 +15,13 @@ alias p="ps aux |grep "
 alias folders="find . -maxdepth 1 -type d -print | xargs du -sk | sort -rn"
 alias grep='grep --color=auto'
 alias diff='colordiff'
-alias binstall="sudo brew install"
+alias binstall="sudo brew install" #only for mac osx
 alias pinstall="sudo pip install"
 alias pversion="pip freeze | grep"
-alias mute="osascript -e 'set volume output muted true'"
-alias unmute="osascript -e 'set volume output muted false'"
-alias envdo="sudo /opt/immune/bin/envdo"
+alias mute="osascript -e 'set volume output muted true'" #for mac osx only
+alias unmute="osascript -e 'set volume output muted false'" #for mac osx only
 alias kill="sudo kill -9"
-export COCOS2DX_ROOT=/Users/dg/Documents/acstudios/backup/cocos2d-x-2.2.1
-export NDK_ROOT=/Users/dg/Documents/acstudios/backup/android-ndk-r10d
-export ANDROID_HOME=/Users/dg/Documents/acstudios/backup/adt-bundle-mac-x86_64-20140702/sdk
-export PATH="$ANDROID_HOME/platform-tools:$PATH"
-export PATH="/usr/local/git/bin:$PATH"
-export PATH="~/.rvm/bin:$PATH"
-export PATH="~/Documents/acstudios/apps/sonar/sonar-runner-2.4/bin:$PATH"
-export SONAR_RUNNER_HOME="/Users/dg/Documents/acstudios/apps/sonar/sonar-runner-2.4"
-export PATH="/Users/dg/Downloads/python-idzip/bin:$PATH"
-export JAVA_HOME=$(/usr/libexec/java_home -v1.6)
-export M2_HOME=~/Downloads/apache-maven-3.2.5
-export M2=$M2_HOME/bin
-export PATH=$M2:$PATH
 #alias refresh_profile=source ~/.bash_profile
-
-calender(){
-#can='\[\e[0;31m\]'
-#echo -e ""
-#echo -ne "Today is "; date
-echo -e ""; cal | grep -C6 --color -e " $(date +%e)" -e "^(date +%e)";
-#echo -ne "Up time:";uptime | awk /'up/'
-#echo "";
-}
 calender
 sl(){
 ssh support@192.168.2.$1
@@ -112,20 +89,80 @@ mvg (){
 
 [[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm" # Load RVM into a shell session *as a function*
 
-# Add environment variable COCOS_CONSOLE_ROOT for cocos2d-x
-export COCOS_CONSOLE_ROOT=/Users/dg/Documents/acstudios/backup/cocos2d-x-3.4/tools/cocos2d-console/bin
-export PATH=$COCOS_CONSOLE_ROOT:$PATH
+#extract archives
+extract () {
+   if [ -f $1 ] ; then
+       case $1 in
+           *.tar.bz2)   tar xvjf $1    ;;
+           *.tar.gz)    tar xvzf $1    ;;
+           *.bz2)       bunzip2 $1     ;;
+           *.rar)       unrar x $1       ;;
+           *.gz)        gunzip $1      ;;
+           *.tar)       tar xvf $1     ;;
+           *.tbz2)      tar xvjf $1    ;;
+           *.tgz)       tar xvzf $1    ;;
+           *.zip)       unzip $1       ;;
+           *.Z)         uncompress $1  ;;
+           *.7z)        7z x $1        ;;
+           *)           echo "don't know how to extract '$1'..." ;;
+       esac
+   else
+       echo "'$1' is not a valid file!"
+   fi
+ }
 
-# Add environment variable COCOS_TEMPLATES_ROOT for cocos2d-x
-export COCOS_TEMPLATES_ROOT=/Users/dg/Documents/acstudios/backup/cocos2d-x-3.4/templates
-export PATH=$COCOS_TEMPLATES_ROOT:$PATH
+#Extracts a column from a table given by command. takes column index as a argument.
+#ls -l | fawk 9 (lists 9th column(file names) from a table given by ls -l
+function fawk {
+    first="awk '{print "
+    last="}'"
+    cmd="${first}\$${1}${last}"
+    eval $cmd
+}
 
-# Add environment variable ANDROID_SDK_ROOT for cocos2d-x
-export ANDROID_SDK_ROOT=/Users/dg/Documents/acstudios/backup/adt-bundle-mac-x86_64-20140702/sdk
-export PATH=$ANDROID_SDK_ROOT:$PATH
-export PATH=$ANDROID_SDK_ROOT/tools:$ANDROID_SDK_ROOT/platform-tools:$PATH
+function PWD {
+pwd | awk -F\/ '{print $(NF-1),$(NF)}' | sed 's/ /\\//'
+}
 
-# Add environment variable ANT_ROOT for cocos2d-x
-export ANT_ROOT=/usr/local/Cellar/ant/1.9.4/libexec/bin
-export PATH=$ANT_ROOT:$PATH
+#dirsize - finds directory sizes and lists them for the current directory
+dirsize ()
+{
+du -shx * .[a-zA-Z0-9_]* 2> /dev/null | \
+egrep '^ *[0-9.]*[MG]' | sort -n > /tmp/list
+egrep '^ *[0-9.]*M' /tmp/list
+egrep '^ *[0-9.]*G' /tmp/list
+rm -rf /tmp/list
+}
 
+#export PROMPT_COMMAND="echo -n \[\$(date +%r)\]\ "
+
+#parse_git_branch() {
+#     git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/ (\1)/'
+#}
+#export PS1="\u@\h:\[\033[32m\]\W>\[\033[33m\]\$(parse_git_branch)\[\033[00m\] $ "
+
+#GIT Stuffs
+# Set config variables first
+   GIT_PROMPT_ONLY_IN_REPO=1
+
+   GIT_PROMPT_FETCH_REMOTE_STATUS=0   # uncomment to avoid fetching remote status
+
+   # GIT_PROMPT_SHOW_UPSTREAM=1 # uncomment to show upstream tracking branch
+   GIT_PROMPT_SHOW_UNTRACKED_FILES=no # can be no, normal or all; determines counting of untracked files
+
+  # GIT_PROMPT_SHOW_CHANGED_FILES_COUNT=0 # uncomment to avoid printing the number of changed files
+
+   # GIT_PROMPT_STATUS_COMMAND=gitstatus_pre-1.7.10.sh # uncomment to support Git older than 1.7.10
+   function last_three(){
+       pwd |rev| awk -F / '{print $1,$2,$3}' | rev | sed s_\ _/_ | sed s_\ _/_ 
+   }
+   #GIT_PROMPT_START="_LAST_COMMAND_INDICATOR_ \u@\h"    # uncomment for custom prompt start sequence
+   #GIT_PROMPT_END=''      # uncomment for custom prompt end sequence
+
+   GIT_PROMPT_START="_LAST_COMMAND_INDICATOR_ \u@\h \w"
+GIT_PROMPT_END="\n${White}\$(date +%H:%M)${ResetColor} $ "
+   # as last entry source the gitprompt script
+   # GIT_PROMPT_THEME=Custom # use custom theme specified in file GIT_PROMPT_THEME_FILE (default ~/.git-prompt-colors.sh)
+   # GIT_PROMPT_THEME_FILE=~/.git-prompt-colors.sh
+   GIT_PROMPT_THEME=Solarized # use theme optimized for solarized color scheme
+   source ~/.bash-git-prompt/gitprompt.sh
