@@ -1,26 +1,43 @@
 export CLICOLOR=1
 PS1="u@h:\\w "
+
+alias sl='ls'
+alias l='ls -l'
 alias ll='ls -alh'
-alias la='ls -A'
-alias lk='ls -lhSr'
-alias l='ls -CFlh'
-alias lsd="ls -alhSrF | grep /$"
-alias ld='ls -ltr'
-alias latest="ls -lrt | tail -1 | awk '{print $NF}'"
+alias la='ls -Al' #show hidden files
+alias lk='ls -lhSr' #sort by size
+alias lx='ls -lXB' #sort by extension
+alias lc='ls -lcr' #sort by change time
+alias lu='ls -lur' #sort by access time'
+alias lr='ls -lR' #recursive ls
+alias ld='ls -ltr' #sort by date
+alias lsd='ls -alhSrF | grep /$'
+alias latest="ls -lrt | tail -5 | awk '{print $NF}'"
+alias rm='rm -iv'
+alias rmf='rm -rf'
+alias cp='cp -iv'
+alias mv='mv -iv'
+alias lsl='ls -al'
+alias lt='ls -alt'
+alias o='gnome-open '
+alias diff='colordiff'
 alias cd..='cd ..'
 alias ..='cd ..'
-alias h="history|grep "
-alias f="find . |grep "
-alias p="ps aux |grep "
 alias folders="find . -maxdepth 1 -type d -print | xargs du -sk | sort -rn"
 alias grep='grep --color=auto'
-alias diff='colordiff'
-alias binstall="sudo brew install" #only for mac osx
-alias pinstall="sudo pip install"
-alias pversion="pip freeze | grep"
-alias mute="osascript -e 'set volume output muted true'" #for mac osx only
-alias unmute="osascript -e 'set volume output muted false'" #for mac osx only
-alias kill="sudo kill -9"
+alias path='echo -e ${PATH//:/\\n}'
+alias topproc='ps auxf | grep dgautam | sort -nr -k 4 | head '
+alias ps='ps auxf '
+alias gs='git status'
+alias gss='gits status'
+alias gsu='git status -uno'
+alias gco='git commit '
+alias ga='git add '
+alias gsf='git show --pretty="" --name-only ' #Takes one hash code, shows files affected by that commit
+alias gdf='git diff --name-status ' #Takes two hash codes, lists files that are changed in between
+alias gdc='git diff --cached'
+alias gch='git checkout '
+alias killsh="kill -9 $(ps aux | grep dgautam | grep -e process | awk '{ print $2 }')" #process=process name
 #alias refresh_profile=source ~/.bash_profile
 calender
 sl(){
