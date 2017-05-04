@@ -30,7 +30,7 @@ alias topproc='ps auxf | grep dgautam | sort -nr -k 4 | head '
 alias ps='ps auxf '
 alias gs='git status'
 alias gss='gits status'
-alias gsu='git status -uno'
+alias gsu='git status -uno' Git status ignoring untracked files
 alias gco='git commit '
 alias ga='git add '
 alias gsf='git show --pretty="" --name-only ' #Takes one hash code, shows files affected by that commit
@@ -38,13 +38,14 @@ alias gdf='git diff --name-status ' #Takes two hash codes, lists files that are 
 alias gdc='git diff --cached'
 alias gch='git checkout '
 alias killsh="kill -9 $(ps aux | grep dgautam | grep -e process | awk '{ print $2 }')" #process=process name
-#alias refresh_profile=source ~/.bash_profile
-calender
-sl(){
-ssh support@192.168.2.$1
+alias gec='git commit --amend' #Adds current stages files to last commit making a whole modification as one commit.
+
+grc(){ #Git remove commit: Removes number of local commits passed as argument
+git reset HEAD~$1
 }
-sr(){
-ssh support@10.45.1.$1
+
+git_cc() { #prints the common commit from where two branches are diverged. Take two branch names as arguments
+git log $(git merge-base  $1 $2) -n 1
 }
 
 #Create tar archive of a file or folder
