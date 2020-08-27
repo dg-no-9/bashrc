@@ -1,0 +1,320 @@
+;; -*- mode: emacs-lisp -*-
+
+; https://snarfed.org/why_i_run_shells_inside_emacs
+(custom-set-variables
+; '(comint-scroll-to-bottom-on-input t)  ; always insert at the bottom
+; '(comint-scroll-to-bottom-on-output t) ; always add output at the bottom
+ '(comint-scroll-show-maximum-output t) ; scroll to show max possible output
+; '(comint-completion-autolist t)        ; show completion list when ambiguous
+ '(comint-input-ignoredups t)           ; no duplicates in command history
+ '(comint-completion-addsuffix t)       ; insert space/slash after file completion
+ )
+; interpret and use ansi color codes in shell output windows
+(ansi-color-for-comint-mode-on)
+
+
+(desktop-load-default)
+;(desktop-read)
+
+(put 'eval-expression 'disabled nil)
+
+;;(load "auto-completion")
+;;(global-set-key "\C-o" 'complete)
+
+;;(global-set-key "\C-e"    'ediff-buffers)
+;;(global-set-key "\C-e"    'end-of-line)
+
+(global-set-key "\C-h" 'delete-backward-char)
+;;(define-key global-map "\C-t" help-map)
+;;(setq help-map (cons '\C-t (cdr help-map)))
+
+;(global-set-key "\C-cs" 'shell) Removed so as to not override cscope
+(global-set-key "\C-c\C-s" 'shell)
+(global-set-key "\C-c\C-r" 'revert-buffer)
+(global-set-key "\C-cr" 'auto-revert-mode)
+
+(setq compile-command "cd ~/work/thk/dev; scons -j 6 -k")
+(setq shortqa-command "cd ~/work/thk/qa/short; ./runqa -j 6")
+
+(display-time)
+(global-set-key "\C-x\C-e" 'compile)
+;(global-set-key "\C-x\C-q" 'shortqa-command) ;; commented out because this one does not remember history
+(global-set-key "\C-xd" 'ediff-buffers)
+(global-set-key "\C-x\C-n" 'compilation-next-error)
+(global-set-key "\C-xf" 'compilation-next-file)
+(global-set-key "\C-c\C-k" 'copy-region-as-kill)
+(global-set-key "\C-x\C-v" 'find-file-other-window)
+(global-set-key "\C-xg"    'goto-line)
+(global-set-key "\C-x\C-g" 'goto-line)
+(global-set-key "\C-ci"    'indent-region)
+(global-set-key "\C-c\C-i" 'indent-region)
+(global-set-key "\C-x,"    'beginning-of-buffer)
+(global-set-key "\C-x."    'end-of-buffer)
+(global-set-key "\C-xq"    'query-replace)
+
+(global-set-key "\C-xvv"    'ediff-revision)
+
+(global-set-key "\C-xu"    'undo)
+
+(global-set-key "o" 'dabbrev-expand)
+(global-set-key "q" 'query-replace)
+(global-set-key "" 'undo)
+(global-set-key "\M-["    'tags-search)
+
+(global-set-key "\C-\M-r" 'isearch-forward-regexp)
+
+;; temporarily assign switch to bufer for these till I found gosling bindings
+(global-set-key "\C-xp"    'comint-previous-matching-input-from-input)
+(global-set-key "\C-x\C-p"    'comint-previous-matching-input-from-input)
+;
+(global-set-key "\C-xn"    'comint-next-input)
+
+(global-set-key "\M-p"    'comint-previous-matching-input-from-input)
+
+
+;; commented these out because they do not remember the history
+;; (defun compile0-command ()
+;;   (interactive)
+;;   (set (make-local-variable 'compile-command)
+;;        (concat "cd ~/work/thk/dev; scons -j 6"))
+;;   (call-interactively 'compile))
+;; (defun shortqa-command ()
+;;   (interactive)
+;;   (set (make-local-variable 'compile-command)
+;;        (concat "cd ~/work/thk/qa/short; ./runqa -j 6"))
+;;   (call-interactively 'compile))
+
+(setq auto-mode-alist (cons '("\\.C$" . c++-mode) auto-mode-alist))
+(setq auto-mode-alist (cons '("\\.h$" . c++-mode) auto-mode-alist))
+(setq auto-mode-alist (cons '("\\.log$" . text-mode) auto-mode-alist))
+
+(setq vlf_el_path "~/work/thk/ext/emacs/contrib/lisp/vlf-1.5/vlf.el")
+(when (file-exists-p vlf_el_path)
+  (add-to-list 'load-path "~/work/thk/ext/emacs/contrib/lisp/vlf-1.5")
+  (load-file vlf_el_path)
+  (require 'vlf-integrate)
+  )
+
+(setq xcscope_el_path "~/work/thk/ext/emacs/contrib/lisp/xcscope/xcscope.el")
+(when (file-exists-p xcscope_el_path)
+  (add-to-list 'load-path "~/work/thk/ext/emacs/contrib/lisp/xcscope/xcscope")
+  (load-file xcscope_el_path)
+  (require 'xcscope)
+  (cscope-setup)
+  )
+
+;; Do not point a fixed place
+;; (cscope-set-initial-directory "~/work/thk/dev")
+;; (setq cscope-database-file "cscope.out")
+(setq cscope-option-do-not-update-database t)
+
+;;(load "hilit-chg")
+
+(custom-set-variables
+  ;; custom-set-variables was added by Custom.
+  ;; If you edit it by hand, you could mess it up, so be careful.
+  ;; Your init file should contain only one such instance.
+  ;; If there is more than one, they won't work right.
+;; '(blink-cursor-mode nil)
+ '(case-fold-search t)
+ '(compilation-search-path (quote (".")))
+ '(current-language-environment "Latin-9")
+ '(default-input-method "latin-9-prefix")
+ '(global-font-lock-mode t nil (font-lock))
+;; '(load-home-init-file t t)
+;; '(menu-bar-mode t)
+;; '(rmail-enable-mime t t)
+;; '(rmail-preserve-inbox (quote f))
+ '(show-paren-mode t nil (paren)))
+
+(setq visible-bell t)
+
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(cursor ((t (:background "white")))))
+
+(if (eq window-system 'x)
+    (progn
+;;      (blink-cursor-mode nil)
+      (setq default-frame-alist
+         '((cursor-type . box))))
+  ;; or you can use '((cursor-type . bar))))
+    (progn
+;;      (blink-cursor-mode t)
+      (setq default-frame-alist
+         '((cursor-type . box)))))
+
+;; have .log extentions use compilation mode so that it is easy to trace/debug along with source code
+;;(setq auto-mode-alist (append auto-mode-alist
+;;                                    '(("\\.log$" . compilation-mode))))
+
+
+(global-set-key [f5] (lambda () (interactive) (shell "*shell*")))
+(global-set-key [f6] (lambda () (interactive) (shell "s1")))
+(global-set-key [f7] (lambda () (interactive) (shell "s2")))
+(global-set-key [f13] (lambda () (interactive) (shell "s1")))
+(global-set-key [f14] (lambda () (interactive) (shell "s2")))
+(global-set-key [f8] (lambda () (interactive) (switch-to-buffer "*compilation*")))
+(global-set-key [f15] (lambda () (interactive) (switch-to-buffer "*compilation*")))
+
+;;(mouse-wheel-mode t)
+;;(set-face-font 'default "fixed")
+
+(set-background-color "black")
+(set-foreground-color "light green")
+;;(set-frame-front "-apple-monaco-medium-r-normal--14-140-72-72-m-140-mac-roman")
+;;(add-to-list 'default-frame-alist '(font . "-apple-monaco-medium-r-normal--14-140-72-72-m-140-mac-roman"))
+(ignore-errors
+ (set-frame-font "-misc-fixed-medium-r-normal--13-120-75-75-c-70-iso8859-14"))
+
+;(add-to-list 'default-frame-alist '(background-color . "black"))
+;(add-to-list 'default-frame-alist '(foreground-color . "light green"))
+(ignore-errors
+ (add-to-list 'default-frame-alist '(font . "-misc-fixed-medium-r-normal--13-120-75-75-c-70-iso8859-14")))
+
+(global-set-key "\C-x\C-c"    'end-of-buffer)
+(global-set-key "\C- "    'set-mark-command)
+(tool-bar-mode -1)
+(menu-bar-mode -1)
+;;(setq mac-allow-anti-aliasing nil)
+
+(blink-cursor-mode -1)
+
+;(load-file "~/cedet-1.0/common/cedet.el")
+;(global-ede-mode 1)                      ; Enable the Project management system
+;(semantic-load-enable-code-helpers)      ; Enable prototype help and smart completion
+;(global-srecode-minor-mode 1)            ; Enable template insertion menu
+
+(prefer-coding-system 'utf-8)
+
+;; prevent tabs in indentation
+(setq-default indent-tabs-mode nil)
+
+;; do auto-indent with "RET"
+(define-key global-map (kbd "RET") 'newline-and-indent)
+
+(autoload 'octave-mode "octave-mod" nil t)
+(setq auto-mode-alist
+      (cons '("\\.m$" . octave-mode) auto-mode-alist))
+(add-hook 'octave-mode-hook
+          (lambda ()
+            (abbrev-mode 1)
+            (auto-fill-mode 1)
+            (if (eq window-system 'x)
+                (font-lock-mode 1))))
+
+
+
+(defun my-ssh (args)
+  "Connect to a remote host by SSH."
+  (interactive "sssh ")
+  (let ((switches (split-string-and-unquote args)))
+    (set-buffer (apply 'make-term "ssh" "ssh" nil switches))
+    (term-mode)
+    (term-char-mode)
+    (switch-to-buffer "*ssh*")))
+
+
+(setq comint-buffer-maximum-size 500000) ; set maximum-buffer size for shell-mode
+(add-hook 'comint-output-filter-functions 'comint-truncate-buffer) ; will truncate shell buffer to comint-buffer-maximum-size.
+
+(setq undo-limit 900000)
+(setq undo-strong-limit 1300000)
+
+; Delete trailing whitespace from files
+(add-hook 'c-mode-common-hook (lambda () (add-to-list 'write-file-functions 'delete-trailing-whitespace)))
+(add-hook 'python-mode-hook '(lambda () (add-to-list 'write-file-functions 'delete-trailing-whitespace))) ; For some reason, python-mode doesn't always pick up c-mode-common-hook, so need this.
+
+; Don't indent for namespaces
+(add-hook 'c++-mode-hook (lambda () (c-set-offset 'innamespace 0)))
+
+; Let shell know when we resize windows
+(defun comint-fix-window-size ()
+  "Change process window size."
+  (when (derived-mode-p 'comint-mode)
+    (if (setq bufProc (get-buffer-process (current-buffer)))
+        (set-process-window-size bufProc
+                                 (window-height)
+                                 (window-width)))))
+
+(defun gear-shell-mode-hook ()
+  ;; add this hook as buffer local, so it runs once per window.
+  (add-hook 'window-configuration-change-hook 'comint-fix-window-size nil t))
+
+(add-hook 'shell-mode-hook 'gear-shell-mode-hook)
+
+
+(setq frame-title-format
+      (list (format "%s %%S: %%j " (system-name))
+        '(buffer-file-name "%f" (dired-directory dired-directory "%b"))))
+
+(setq-default mode-line-buffer-identification
+              (list 'buffer-file-name
+                    (propertized-buffer-identification "%12f")
+                    (propertized-buffer-identification "%12b")))
+
+(add-hook 'dired-mode-hook
+          (lambda ()
+            ;; TODO: handle (DIRECTORY FILE ...) list value for dired-directory
+            (setq mode-line-buffer-identification
+                  ;; emulate "%17b" (see dired-mode):
+                  '(:eval
+                    (propertized-buffer-identification
+                     (if (< (length default-directory) 17)
+                         (concat default-directory
+                                 (make-string (- 17 (length default-directory))
+                                              ?\s))
+                       default-directory))))))
+
+
+(when (require 'undo-tree nil 'noerror)
+  (global-undo-tree-mode)
+  (global-set-key [(control ?\.)] 'undo-tree-redo)
+  )
+
+(setq large-file-warning-threshold 200000000)
+
+;(set-frame-font "Monospace-18")
+;(add-to-list 'default-frame-alist '(font . "Monospace-18"))
+
+(defun cpp-highlight-if-0/1 ()
+  "Modify the face of text in between #if 0 ... #endif."
+  (interactive)
+  (setq cpp-known-face '(foreground-color . "dim gray"))
+  (setq cpp-unknown-face 'default)
+  (setq cpp-face-type 'dark)
+  (setq cpp-known-writable 't)
+  (setq cpp-unknown-writable 't)
+  (setq cpp-edit-list
+        '((#("1" 0 1
+             (fontified nil))
+           nil
+           (foreground-color . "dim gray")
+           both nil)
+          (#("0" 0 1
+             (fontified nil))
+           (foreground-color . "dim gray")
+           nil
+           both nil)))
+  (cpp-highlight-buffer t))
+
+(defun jpk/c-mode-hook ()
+  (cpp-highlight-if-0/1)
+  (add-hook 'after-save-hook 'cpp-highlight-if-0/1 'append 'local)
+  ;;(add-hook 'after-revert-hook 'cpp-highlight-if-0/1) ; Disabled for now, has side effect of causing errors on file load.
+  )
+
+(add-hook 'c-mode-common-hook 'jpk/c-mode-hook)
+
+;; Proper indentation following macros that cannot end with a semi-colon
+(defun boost-concept-macros-update ()
+  (setq c-macro-names-with-semicolon '("BOOST_CONCEPT_REQUIRES")) ;; Example for multiple macros: '(("M1" "M2" ...))
+  (c-make-macro-with-semi-re))
+(add-hook 'c-mode-common-hook 'boost-concept-macros-update)
+
+
+;; Following are used to prevent too much indendation on emacs-26.2
+(setq c-offsets-alist '((inlambda . 0)))
